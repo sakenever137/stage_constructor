@@ -1,0 +1,13 @@
+.o_list_row_count_sheliya {
+ 	width: 20px;
+    padding-left: 10px !important;
+    text-align: center;
+}
+.o_form_view {
+    .o_form_statusbar {
+        .stage_route_out_widget:not(:empty) + .o_statusbar_buttons:not(:empty) {
+            @extend .pl-2;
+            border-left: solid 1px $gray-400;
+        }
+    }
+}

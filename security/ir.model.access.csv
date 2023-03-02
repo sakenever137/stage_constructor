@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stage_constructor_manager,stage.constructor.manager,model_stage_constructor,group_stage_constructor_manager,1,1,1,1
+access_stage_constructor_user,stage.constructor.user,model_stage_constructor,group_stage_constructor_user,1,0,0,0
+access_stage_voting_inmodel_manager,stage.voting.inmodel.manager,model_stage_voting_inmodel,group_stage_constructor_manager,1,1,1,1
+access_stage_voting_manager,stage.voting.manager,model_stage_voting,group_stage_constructor_manager,1,1,1,1
+access_stage_voting_inmodel_user,stage.voting.inmodel.user,model_stage_voting_inmodel,group_stage_constructor_user,1,0,0,0
+access_stage_voting_user,stage.voting.user,model_stage_voting,group_stage_constructor_user,1,0,0,0

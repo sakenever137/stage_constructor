@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="ir.module.category" id="module_category_stage_constructor">
+            <field name="name">Stage Constructor</field>
+            <field name="description">Category for Stage Constructor</field>
+        </record>
+
+        <record id="group_stage_constructor_user" model="res.groups">
+            <field name="name">Stage Constructor User</field>
+            <field name="category_id" ref="module_category_stage_constructor"/>
+        </record>
+
+        <record id="group_stage_constructor_manager" model="res.groups">
+            <field name="name">Stage Constructor Manager</field>
+            <field name="category_id" ref="module_category_stage_constructor"/>
+            <field name="implied_ids" eval="[(4, ref('group_stage_constructor_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+    </data>
+</odoo>

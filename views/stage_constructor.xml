@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stage_constructor_kanban_view" model="ir.ui.view">
+        <field name="name">stage.constructor.kanban</field>
+        <field name="model">stage.constructor</field>
+        <field name="arch" type='xml'>
+            <kanban default_group_by="stage_from" class="o_kanban_small_column o_kanban_project_tasks asset_aed_kanban">
+                <field name="name"/>
+                <field name="stage_from"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="margin-right: 5px;">
+                                        <field name="name"/>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <field name="button_type"/>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <field name="model_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="stage_constructor_form_view" model="ir.ui.view">
+        <field name="name">stage.constructor.form</field>
+        <field name="model">stage.constructor</field>
+        <field name="arch" type='xml'>
+            <form>
+                <sheet>
+                    <field name="is_configured" invisible="1"/>
+                    <header>
+                        <button name="action_configure" type="object"
+                                string="Configure"
+                                attrs="{'invisible': [('is_configured', '=', True)]}"
+                                class="oe_highlight" />
+                    </header>
+                    <group>
+                        <group>
+                            <field name="model_id"/>
+                            <field name="stage_id_domain" invisible="1"/>
+                            <field name="stage_id" domain="stage_id_domain"/>
+                            <field name="model" invisible="1"/>
+                            <field name="button_type" widget="radio" options="{'horizontal': True}"/>
+                            <field name="name"/>
+                            <field name="button_style"/>
+                            <field name="color" widget="color"/>
+                            <field name="editing" widget="radio"/>
+                            <field name="create_report"/>
+                            <field name="reject_button" />
+                        </group>
+                            <group string="Action" name="move" attrs="{'invisible': [('button_type', '=', 'create')]}">
+                                <field name="stage_from" string="From" widget="generic_m2o" model_field="model"/>
+                                <field name="stage_to" widget="generic_m2o" model_field="model"
+                                       attrs="{'required': [('button_type', 'in', ['move','voting'])]}"/>
+                            </group>
+                            <group string="Action" name="create" attrs="{'invisible': [('button_type', 'in', ['move','voting'])]}">
+                                <field name="stage_from" string="At stage" widget="generic_m2o"  model_field="model"/>
+                                <field name="button_type"/>
+                                <field name="create_id"
+                                       attrs="{'required': [('button_type', '=', 'create')]}"/>
+                                <field name="stage_id"  domain="stage_id_domain"/>
+                                <field name="stage_id_domain" invisible="1"/>
+                               <field name="model" invisible="1"/>
+                            </group>
+                    </group>
+                    <notebook>
+                        <page string="Approvers">
+                            <field name="voter_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="position_id"/>
+                                    <field name="employee_domain" invisible="1"/>
+<!--                                    <field name="employee_id" domain="employee_domain"/>-->
+                                    <field name="employee_id"/>
+                                    <field name="sequence"/>
+                                    <field name="eds_type"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stage_constructor_tree_view" model="ir.ui.view">
+        <field name="name">stage.constructor.tree</field>
+        <field name="model">stage.constructor</field>
+        <field name="arch" type='xml'>
+            <tree>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="stage_id"/>
+                <field name="button_type"/>
+                <field name="model_id"/>
+                <field name="button_style"/>
+            </tree>
+        </field>
+    </record>
+    <record id="stage_constructor_view_form_popup" model="ir.ui.view">
+        <field name="name">stage_constructor_view_form_popup</field>
+        <field name="model">stage.constructor</field>
+        <field name="priority" eval="1000" />
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
+                    <p>
+                        Can not detect a state (or stage or status) field in Domain ! Please select it.
+                    </p>
+                    <p>
+                        State (or stage or status) field is required !
+                    </p>
+                </div>
+                <footer>
+                    <button special="cancel" string="Discard" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="stage_constructor_action" model="ir.actions.act_window">
+        <field name="name">Stage Constructor</field>
+        <field name="res_model">stage.constructor</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
+        <menuitem id="stage_constructor_root"
+              name="Stage Constructor"
+              sequence="16"
+              groups="group_stage_constructor_manager,group_stage_constructor_user"
+        />
+        <menuitem id="stage_constructor_menu"
+              name="Stage Constructor"
+              parent="stage_constructor_root"
+              sequence="1"
+              action="stage_constructor_action"
+              groups="group_stage_constructor_manager,group_stage_constructor_user"
+        />
+</odoo>
